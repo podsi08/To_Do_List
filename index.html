@@ -2,9 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoList</title>
+    <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Lista zadań</h1>
+        </header>
 
+        <div class="filters">
+            <div class="filter to-do">Do zrobienia</div>
+            <div class="filter done">Zrobione</div>
+            <div class="filter priority">
+                Priorytet
+                <!--lista z priorytetami będzie widoczna po najechaniu na filter priority-->
+                <ul class="priority-list">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                </ul>
+            </div>
+        </div>
+
+        <section class="list">
+        <!--tu po prostu miejsce na listę, będziemy ją dodawać w js-->
+        </section>
+
+        <div class="buttons">
+            <button class="add">Dodaj zadanie</button>
+            <button class="remove-done">Usuń wykonane</button>
+            <button class="remove-all">Wyczyść</button>
+        </div>
+    </div>
 </body>
 </html>
