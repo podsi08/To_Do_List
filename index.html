@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoList</title>
     <link href="css/main.css" rel="stylesheet">
+    <script src="js/app.js"></script>
 </head>
 <body>
     <div class="container">
@@ -30,6 +31,29 @@
 
         <section class="list">
         <!--tu po prostu miejsce na listę, będziemy ją dodawać w js-->
+        </section>
+
+        <section class="form-container"> <!-- Sekcja z formularzem. Każdy label ma osobny id-->
+            <form>
+                <!--<fieldset>--> <!-- max-width opisu nie działa kiedy fieldset działa ;/ -->
+                    <label>Temat zadania:</label>
+                    <textarea id="task-name" rows="1"></textarea>
+                    <label>Termin:</label>
+                    <input type="date" id='task-date' name="task-date" placeholder="">
+                    <label id='task-priority'>Priorytet:</label>
+                    <select>
+                        <option value="1">1 (bardzo ważny)</option> <!-- Tutaj można zostawić tylko -->
+                        <option value="2">2</option>    <!-- cyfry (łatwiejsza walidacja) -->
+                        <option value="3">3</option>    <!-- Nie wiem czy trzeba określić -->
+                        <option value="4">4</option>    <!-- że 1 to najważniejsze -->
+                        <option value="5">5 (najmniej ważny)</option>   <!-- 5 to najmniej ważne -->
+                    </select>
+                    <label>Opis:</label>
+                    <textarea id="task-description" rows="10"></textarea>
+                    <input id="new-task" type="submit" name="addnewform" value="Potwierdź dodanie zadania">
+                    <input id="reset-task" type="submit" name="clearform" value="Wyczyść formularz">
+                <!--</fieldset>-->
+            </form>
         </section>
 
         <div class="buttons">
