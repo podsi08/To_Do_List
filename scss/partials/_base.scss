@@ -1,0 +1,31 @@
+@import "../modules/colors.scss";
+@import "../modules/fonts.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: $background-color;
+	font-family: $font_main;
+	.container {
+		width: 100vw;
+		header h1 {
+			text-align: center;
+			color: $font-color;
+			margin: 10px;
+		}
+	}
+	section {
+		min-height: 200px;
+	}
+}
+
+@media only screen and (min-width: 450px){
+	.container {
+		max-width: 800px;
+		margin: auto;
+	}
+}

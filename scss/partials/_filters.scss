@@ -1,0 +1,53 @@
+@import "../modules/colors.scss";
+@import "../modules/fonts.scss";
+
+.container {
+	.filters {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.filter {
+			width: 80vw;
+			height: 30px;
+			margin-bottom: 10px;
+			background-color: $button-color;
+			border: 1px solid $button-border;
+			color: $font-color;
+			border-radius: 10px;
+			font-size: 14px;
+			text-align: center;
+			line-height: 30px;
+			&.priority {
+				ul {
+					display: none;
+					list-style: none;
+					margin-top: 0;
+					background-color: $button-color;
+					li {
+						text-align: left;
+						padding-left: 5px;
+					}
+				}
+				&:hover {
+					ul {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 450px){
+	.container {
+		.filters {
+			flex-direction: row;
+			justify-content: space-around;
+			.filter {
+				width: 30vw;
+				margin-right: 20px;
+				margin-left: 20px;
+			}
+		}
+	}
+}
