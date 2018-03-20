@@ -37,7 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
     var day = getDate.getUTCDate();
     var currentDate = `${year}-${month}-${day}`;
 
-    var tasks = [];
+    // jeżeli są dane w local storage pobieramy je i to jest nasza tablica tasks
+    // jeżeli nie, tworzymy nową pustą tablicę
+    if (JSON.parse( localStorage.getItem('todo_list') ) === null) {
+        var tasks = [];
+    } else {
+        tasks = JSON.parse( localStorage.getItem('todo_list'));
+    }
+
+    console.log(tasks);
     var idCounter = 0;
 
     // funkcja dodająca error
@@ -46,6 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
         var element = document.createElement('div');
         element.innerText = content;
         place.appendChild(element);
+    }
+
+    // funkcja zapisu do local storage
+    function addToLocalStorage(data) {
+        localStorage.setItem('todo_list', JSON.stringify(data));
     }
 
     form.addEventListener('submit', function (e) {
@@ -59,10 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // nowy obiekt
 
         var newObject = {};
-
-        // zwiększanie numeru id
-
-        idCounter++;
 
         // walidacja dodawanie wartości do obiektu
 
@@ -82,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // data
 
-        if (date.value == '') {
+        if (date.value === '') {
             addErrorMsg(termError, 'Musisz podać datę.');
             error = true;
         } else {
@@ -91,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // priorytet
 
-        if (select.value == '0') {
+        if (select.value === '0') {
             addErrorMsg(priorityError, 'Musisz wybrać priorytet zadania.');
             error = true;
         } else {
@@ -112,16 +121,20 @@ document.addEventListener("DOMContentLoaded", function () {
         newObject.done = false;
 
         // dodawanie obiektu do tablicy
-        if (error == false) {
+        // czyszczenie formularza po potwierdzeniu dodania zadania tylko gdy brak błędów
+        // zwiększenie licznika id też tylko w przypadku braku błędów
+        // po dodaniu poprawnego zadania zapis do local storage
+        if (!error) {
             tasks.push(newObject);
+            idCounter++;
+            title.value = '';
+            date.value = '';
+            select.value = '0';
+            description.value = '';
+            addToLocalStorage(tasks);
         }
-
+        console.log(tasks);
         // czyszczenie wartości pól, done ma domyślnie false, id rośnie o 1.
-
-        title.value = '';
-        date.value = '';
-        select.value = '0';
-        description.value = '';
 
     });
 
