@@ -36,7 +36,22 @@
 			}
 		}
 	}
+	table {
+		max-width: 100%;
+		border-collapse: collapse;
+		display: flex;
+		justify-content: center;
+		td, th {
+			word-wrap: break-word;
+			padding: 5px;
+			border: 1px solid black;
+			th {
+				border: 2px solid black;
+			}
+		}
+	}
 }
+
 
 @media only screen and (min-width: 450px){
 	.container {
