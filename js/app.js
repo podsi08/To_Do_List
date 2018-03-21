@@ -136,6 +136,14 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(tasks);
         // czyszczenie wartości pól, done ma domyślnie false, id rośnie o 1.
 
+        form.hidden = true; // ukrycie tabeli jeśli jest pusta
+
+        if (!(JSON.parse( localStorage.getItem('todo_list') ) === null)) {
+            table.hidden = false; // pokazanie tabeli jeśli coś jest w local storage
+        }
+
+        getLocalStorage(); // wyrzucanie wyników do tabeli zaraz po dodaniu zadania
+
     });
 
     // czyszczenie zadania
@@ -173,31 +181,33 @@ document.addEventListener("DOMContentLoaded", function () {
     //funkcja odczytu local storage
 
     function getLocalStorage() {
-            var tasks = JSON.parse(localStorage.getItem('todo_list'));
             for (var key in tasks) {
                 var list = document.querySelector("tbody");
                 var tr = document.createElement("tr");
-                var id = document.createElement("td");
+                //var id = document.createElement("td");
                 var title = document.createElement("td");
                 var date = document.createElement("td");
                 var priority = document.createElement("td");
                 var description = document.createElement("td");
+                var checkboxTd = document.createElement("td");
+                var checkbox = document.createElement('input');
+                checkbox.type = "checkbox";
+                checkbox.name = "undone";
 
-                id.className="text-centered";
                 date.className="text-centered";
                 priority.className="text-centered";
 
-                id.innerText = tasks[key].id;
+                checkboxTd.appendChild(checkbox);
                 title.innerText = tasks[key].title;
                 date.innerText = tasks[key].date;
                 priority.innerText = tasks[key].priority;
                 description.innerText = tasks[key].description;
 
-                tr.appendChild(id);
                 tr.appendChild(title);
                 tr.appendChild(date);
                 tr.appendChild(priority);
                 tr.appendChild(description);
+                tr.appendChild(checkboxTd);
 
                 list.appendChild(tr);
             }
