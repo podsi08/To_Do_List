@@ -154,5 +154,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-});
+    // ukrycie tabeli
 
+    var table = document.querySelector(".list");
+
+    table.hidden = true;
+
+    // pokazanie tabeli gdy local storage nie jest pusty
+
+    function toggleTableSection() {
+        if (!(JSON.parse( localStorage.getItem('todo_list') ) === null)) {
+            table.hidden = false;
+        }
+    }
+
+    toggleTableSection();
+
+    //funkcja odczytu local storage
+
+    function getLocalStorage() {
+            var tasks = JSON.parse(localStorage.getItem('todo_list'));
+            for (var key in tasks) {
+                var list = document.querySelector("tbody");
+                var tr = document.createElement("tr");
+                var id = document.createElement("td");
+                var title = document.createElement("td");
+                var date = document.createElement("td");
+                var priority = document.createElement("td");
+                var description = document.createElement("td");
+
+                id.className="text-centered";
+                date.className="text-centered";
+                priority.className="text-centered";
+
+                id.innerText = tasks[key].id;
+                title.innerText = tasks[key].title;
+                date.innerText = tasks[key].date;
+                priority.innerText = tasks[key].priority;
+                description.innerText = tasks[key].description;
+
+                tr.appendChild(id);
+                tr.appendChild(title);
+                tr.appendChild(date);
+                tr.appendChild(priority);
+                tr.appendChild(description);
+
+                list.appendChild(tr);
+            }
+    }
+
+    getLocalStorage();
+    
+});
