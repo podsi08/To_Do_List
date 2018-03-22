@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //dodawanie rzędów do wyświetlanej na stronie tabeli z zadaniami
     var listOfTasks = document.querySelector("tbody");
+
     function addTaskToList(task) {
         var tr = document.createElement("tr");
         var taskTitle = document.createElement("td");
@@ -23,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.type = "checkbox";
         checkbox.name = "undone";
 
-        taskDate.className="text-centered";
-        taskPriority.className="text-centered";
+        taskDate.className = "text-centered";
+        taskPriority.className = "text-centered";
 
         checkboxTd.appendChild(checkbox);
         taskTitle.innerText = task.title;
@@ -99,15 +100,24 @@ document.addEventListener("DOMContentLoaded", function () {
     var priorityError = document.querySelector('.error-2');
     var descriptionError = document.querySelector('.error-3');
 
-    /*
-     obecna data, potrzebne do walidacji
 
-     var getDate = new Date();
-     var year = getDate.getUTCFullYear();
-     var month = getDate.getUTCMonth() + 1;
-     var day = getDate.getUTCDate();
-     var currentDate = `${year}-${month}-${day}`;
-    */
+    // obecna data, potrzebne do walidacji
+
+    var getDate = new Date();
+    var year = getDate.getUTCFullYear();
+    var month = getDate.getUTCMonth() + 1;
+    var day = getDate.getUTCDate();
+    var currentDate;
+
+    if (month.toString().length === 1 && day.toString().length === 1) {
+        currentDate = `${year}-0${month}-0${day}`;
+    } else if (month.toString().length === 1) {
+        currentDate = `${year}-0${month}-${day}`;
+    } else if (day.toString().length === 1) {
+        currentDate = `${year}-${month}-0${day}`;
+    }
+
+    console.log(currentDate.substr(8, 2));
 
     //wyświetlanie tabeli z zadaniami z local storage
 
@@ -127,22 +137,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // nowy obiekt
 
-        var newObject = {};
+        var newTask = {};
 
         // walidacja dodawanie wartości do obiektu
 
-        newObject.id = idCounter;
+        newTask.id = idCounter;
 
         // tytuł
 
         if (title.value.length < 5) {
             addErrorMsg(taskError, 'Tytuł musi zawierać minimum 5 znaków.');
             error = true;
-        } else if (!title.value.replace(/^\s+|\s+$/g, "")) {
+        } else if (title.value.trim().length === 0) {
             addErrorMsg(taskError, 'Tytuł nie może zawierać wyłącznie białych znaków.');
             error = true;
         } else {
-            newObject.title = title.value;
+            newTask.title = title.value;
         }
 
         // data
@@ -150,9 +160,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (date.value === '') {
             addErrorMsg(termError, 'Musisz podać datę.');
             error = true;
+        } else if (currentDate.substr(0, 4) > date.value.substr(0, 4) || currentDate.substr(5, 2) > date.value.substr(5, 2) || currentDate.substr(8, 2) > date.value.substr(8, 2)) {
+            addErrorMsg(termError, 'nie możesz podać wstecznej daty.');
+            error = true;
         } else {
-            newObject.date = date.value;
+            newTask.date = date.value;
         }
+        console.log(date.value);
 
         // priorytet
 
@@ -160,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
             addErrorMsg(priorityError, 'Musisz wybrać priorytet zadania.');
             error = true;
         } else {
-            newObject.priority = select.options[select.selectedIndex].value;
+            newTask.priority = select.options[select.selectedIndex].value;
         }
 
         // opis
@@ -168,34 +182,32 @@ document.addEventListener("DOMContentLoaded", function () {
         if (description.value.length < 10) {
             addErrorMsg(descriptionError, 'Opis musi zawierać minimum 10 znaków.');
             error = true;
-        } else if (!description.value.replace(/^\s+|\s+$/g, "")) {
+        } else if (description.value.trim().length === 0) {
             addErrorMsg(descriptionError, 'Tytuł nie może zawierać wyłącznie białych znaków.');
             error = true;
         } else {
-            newObject.description = description.value;
+            newTask.description = description.value;
         }
 
-        newObject.done = false;
+        newTask.done = false;
 
         // dodawanie obiektu do tablicy
         // czyszczenie formularza po potwierdzeniu dodania zadania tylko gdy brak błędów
         // zwiększenie licznika id też tylko w przypadku braku błędów
         // po dodaniu poprawnego zadania zapis do local storage i wyświetlenie w tabeli
         if (!error) {
-            tasks.push(newObject);
+            tasks.push(newTask);
             idCounter++;
             title.value = '';
             date.value = '';
             select.value = '0';
             description.value = '';
             addToLocalStorage(tasks);
-            addTaskToList(newObject);
+            addTaskToList(newTask);
             table.hidden = false;
             toggleFormSection();
         }
-        console.log(tasks);
     });
-
 
     // czyszczenie zadania
 
@@ -216,10 +228,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var clearButton = document.querySelector(".remove-all");
 
-    clearButton.addEventListener("click", function(){
+    clearButton.addEventListener("click", function () {
         localStorage.setItem(taskListLocalStorageKey, null);
         tasks = [];
         listOfTasks.innerHTML = "";
         table.hidden = true;
     });
+
+    // checkbox w zadaniu
+
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+    checkboxes.forEach(function (element, key) {
+        element.addEventListener('click', function (e) {
+            if (element.checked) {
+                element.parentElement.parentElement.style.backgroundColor = 'lightgrey';
+                element.parentElement.style.backgroundColor = 'lightgreen';
+                element.parentElement.parentElement.style.color = 'gray';
+                tasks[key].done = true;
+            } else {
+                element.parentElement.parentElement.style.backgroundColor = 'transparent';
+                element.parentElement.style.backgroundColor = 'transparent';
+                element.parentElement.parentElement.style.color = 'black';
+                tasks[key].done = true;
+            }
+        });
+    });
+
 });
