@@ -23,11 +23,17 @@ document.addEventListener("DOMContentLoaded", function () {
         var checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.name = "undone";
+        var deleteTd = document.createElement("td");
+        var deleteTask = document.createElement('input');
+        deleteTask.type = "submit";
+        deleteTask.name = "delete";
+        deleteTask.value = "Usuń";
 
         taskDate.className = "text-centered";
         taskPriority.className = "text-centered";
 
         checkboxTd.appendChild(checkbox);
+        deleteTd.appendChild(deleteTask);
         taskTitle.innerText = task.title;
         taskDate.innerText = task.date;
         taskPriority.innerText = task.priority;
@@ -38,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tr.appendChild(taskPriority);
         tr.appendChild(taskDescription);
         tr.appendChild(checkboxTd);
+        tr.appendChild(deleteTd);
 
         listOfTasks.appendChild(tr);
     }
@@ -250,9 +257,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 element.parentElement.parentElement.style.backgroundColor = 'transparent';
                 element.parentElement.style.backgroundColor = 'transparent';
                 element.parentElement.parentElement.style.color = 'black';
-                tasks[key].done = true;
+                tasks[key].done = false;
             }
         });
     });
 
+    //usuwanie wybranego zadania z tabeli i local storage
+
+    var deleteTask = document.querySelectorAll('input[name=delete]');
+
+    deleteTask.forEach(function (button, key) {
+        button.addEventListener("click", function() {
+            if (tasks[key].done === true) {
+                listOfTasks.removeChild(this.parentElement.parentElement);
+                //localStorage.removeItem(taskListLocalStorageKey); //Aktualnie usuwa całą zawartość local storage
+            }
+        });
+    });
 });
