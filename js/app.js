@@ -1,65 +1,121 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    var form = document.querySelector("form"); // główny formularz
-    var add_button = document.querySelector(".add"); // przycisk "Dodaj zadanie"
-    var new_task = document.getElementById("new-task"); // przycisk "Potwierdź dodanie zadania"
-    var reset_task = document.getElementById("reset-task"); // przycisk "Wyczyść formularz"
+    var taskListLocalStorageKey = 'to_do_list';
 
-    form.hidden = true; // Domyślnie ukrywa formularz po załadowaniu strony
+    //*funkcje*****************************************************************************
 
+    //chowanie i pokazywanie formularza
     function toggleFormSection() {
         form.hidden = !form.hidden;
     }
 
-    add_button.addEventListener("click", toggleFormSection); // Formularz pokazuje się po wciśnięciu przycisku "Dodaj zadanie"
 
-    // #0 Zapisywanie danych z formularza do tablicy
+    //dodawanie rzędów do wyświetlanej na stronie tabeli z zadaniami
+    var listOfTasks = document.querySelector("tbody");
+    function addTaskToList(task) {
+        var tr = document.createElement("tr");
+        var taskTitle = document.createElement("td");
+        var taskDate = document.createElement("td");
+        var taskPriority = document.createElement("td");
+        var taskDescription = document.createElement("td");
+        var checkboxTd = document.createElement("td");
+        var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = "undone";
 
-    // potrzebne pola
+        taskDate.className="text-centered";
+        taskPriority.className="text-centered";
 
-    var title = document.getElementById('task-name');
-    var date = document.getElementById('task-date');
-    var select = document.getElementById("select");
-    var description = document.getElementById('task-description');
-    var errorMessage = document.querySelectorAll('.error-message');
-    console.log(errorMessage);
+        checkboxTd.appendChild(checkbox);
+        taskTitle.innerText = task.title;
+        taskDate.innerText = task.date;
+        taskPriority.innerText = task.priority;
+        taskDescription.innerText = task.description;
 
-    var taskError = document.querySelector('.error-0');
-    var termError = document.querySelector('.error-1');
-    var priorityError = document.querySelector('.error-2');
-    var descriptionError = document.querySelector('.error-3');
+        tr.appendChild(taskTitle);
+        tr.appendChild(taskDate);
+        tr.appendChild(taskPriority);
+        tr.appendChild(taskDescription);
+        tr.appendChild(checkboxTd);
 
-    // obecna data, potrzebne do walidacji
-
-    var getDate = new Date();
-    var year = getDate.getUTCFullYear();
-    var month = getDate.getUTCMonth() + 1;
-    var day = getDate.getUTCDate();
-    var currentDate = `${year}-${month}-${day}`;
-
-    // jeżeli są dane w local storage pobieramy je i to jest nasza tablica tasks
-    // jeżeli nie, tworzymy nową pustą tablicę
-    if (JSON.parse( localStorage.getItem('todo_list') ) === null) {
-        var tasks = [];
-    } else {
-        tasks = JSON.parse( localStorage.getItem('todo_list'));
+        listOfTasks.appendChild(tr);
     }
 
-    console.log(tasks);
-    var idCounter = 0;
 
     // funkcja dodająca error
-
     function addErrorMsg(place, content) {
         var element = document.createElement('div');
         element.innerText = content;
         place.appendChild(element);
     }
 
+
     // funkcja zapisu do local storage
     function addToLocalStorage(data) {
-        localStorage.setItem('todo_list', JSON.stringify(data));
+        localStorage.setItem(taskListLocalStorageKey, JSON.stringify(data));
     }
+
+    //************************************************************************************
+
+    var form = document.querySelector("form"); // główny formularz
+    var add_button = document.querySelector(".add"); // przycisk "Dodaj zadanie"
+    var reset_task = document.getElementById("reset-task"); // przycisk "Wyczyść formularz"
+
+
+    form.hidden = true; // Domyślnie ukrywa formularz po załadowaniu strony
+
+
+    add_button.addEventListener("click", toggleFormSection); // Formularz pokazuje się po wciśnięciu przycisku "Dodaj zadanie"
+
+
+    //wczytanie danych z local storage
+    var storage = JSON.parse(localStorage.getItem(taskListLocalStorageKey));
+    var table = document.querySelector(".list");
+
+
+    //jeżeli brak danych w local storage tworzymy nową pustą tablicę, counter ustawiamy na 0, ukrywamy tabelę
+    if (storage === null) {
+        var tasks = [];
+        var idCounter = 0;
+        table.hidden = true;
+    } else {
+        //do zmiennej task przypisujemy dane z local storage i na ich podstawie ustawiamy licznik id
+        tasks = storage;
+        idCounter = tasks[tasks.length - 1].id + 1;
+    }
+
+
+    // Zapisywanie danych z formularza do tablicy
+
+    // potrzebne pola
+    var title = document.getElementById('task-name');
+    var date = document.getElementById('task-date');
+    var select = document.getElementById("select");
+    var description = document.getElementById('task-description');
+    var errorMessage = document.querySelectorAll('.error-message');
+
+    var taskError = document.querySelector('.error-0');
+    var termError = document.querySelector('.error-1');
+    var priorityError = document.querySelector('.error-2');
+    var descriptionError = document.querySelector('.error-3');
+
+    /*
+     obecna data, potrzebne do walidacji
+
+     var getDate = new Date();
+     var year = getDate.getUTCFullYear();
+     var month = getDate.getUTCMonth() + 1;
+     var day = getDate.getUTCDate();
+     var currentDate = `${year}-${month}-${day}`;
+    */
+
+    //wyświetlanie tabeli z zadaniami z local storage
+
+    for (var taskIndex in tasks) {
+        addTaskToList(tasks[taskIndex]);
+    }
+
+
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -109,21 +165,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // opis
 
-        if (title.value.length < 10) {
+        if (description.value.length < 10) {
             addErrorMsg(descriptionError, 'Opis musi zawierać minimum 10 znaków.');
             error = true;
-        } else if (!title.value.replace(/^\s+|\s+$/g, "")) {
+        } else if (!description.value.replace(/^\s+|\s+$/g, "")) {
             addErrorMsg(descriptionError, 'Tytuł nie może zawierać wyłącznie białych znaków.');
             error = true;
         } else {
             newObject.description = description.value;
         }
+
         newObject.done = false;
 
         // dodawanie obiektu do tablicy
         // czyszczenie formularza po potwierdzeniu dodania zadania tylko gdy brak błędów
         // zwiększenie licznika id też tylko w przypadku braku błędów
-        // po dodaniu poprawnego zadania zapis do local storage
+        // po dodaniu poprawnego zadania zapis do local storage i wyświetlenie w tabeli
         if (!error) {
             tasks.push(newObject);
             idCounter++;
@@ -132,19 +189,13 @@ document.addEventListener("DOMContentLoaded", function () {
             select.value = '0';
             description.value = '';
             addToLocalStorage(tasks);
+            addTaskToList(newObject);
+            table.hidden = false;
+            toggleFormSection();
         }
         console.log(tasks);
-        // czyszczenie wartości pól, done ma domyślnie false, id rośnie o 1.
-
-        form.hidden = true; // ukrycie tabeli jeśli jest pusta
-
-        if (!(JSON.parse( localStorage.getItem('todo_list') ) === null)) {
-            table.hidden = false; // pokazanie tabeli jeśli coś jest w local storage
-        }
-
-        getLocalStorage(); // wyrzucanie wyników do tabeli zaraz po dodaniu zadania
-
     });
+
 
     // czyszczenie zadania
 
@@ -155,64 +206,20 @@ document.addEventListener("DOMContentLoaded", function () {
         date.value = '';
         select.value = '0';
         description.value = '';
-        form.hidden = false;
         errorMessage.forEach(function (element, key) {
             errorMessage[key].innerText = '';
         });
 
     });
 
-    // ukrycie tabeli
+    //czyszczenie listy zadań i local storage
 
-    var table = document.querySelector(".list");
+    var clearButton = document.querySelector(".remove-all");
 
-    table.hidden = true;
-
-    // pokazanie tabeli gdy local storage nie jest pusty
-
-    function toggleTableSection() {
-        if (!(JSON.parse( localStorage.getItem('todo_list') ) === null)) {
-            table.hidden = false;
-        }
-    }
-
-    toggleTableSection();
-
-    //funkcja odczytu local storage
-
-    function getLocalStorage() {
-            for (var key in tasks) {
-                var list = document.querySelector("tbody");
-                var tr = document.createElement("tr");
-                //var id = document.createElement("td");
-                var title = document.createElement("td");
-                var date = document.createElement("td");
-                var priority = document.createElement("td");
-                var description = document.createElement("td");
-                var checkboxTd = document.createElement("td");
-                var checkbox = document.createElement('input');
-                checkbox.type = "checkbox";
-                checkbox.name = "undone";
-
-                date.className="text-centered";
-                priority.className="text-centered";
-
-                checkboxTd.appendChild(checkbox);
-                title.innerText = tasks[key].title;
-                date.innerText = tasks[key].date;
-                priority.innerText = tasks[key].priority;
-                description.innerText = tasks[key].description;
-
-                tr.appendChild(title);
-                tr.appendChild(date);
-                tr.appendChild(priority);
-                tr.appendChild(description);
-                tr.appendChild(checkboxTd);
-
-                list.appendChild(tr);
-            }
-    }
-
-    getLocalStorage();
-    
+    clearButton.addEventListener("click", function(){
+        localStorage.setItem(taskListLocalStorageKey, null);
+        tasks = [];
+        listOfTasks.innerHTML = "";
+        table.hidden = true;
+    });
 });
