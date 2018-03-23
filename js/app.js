@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //przechodzę po wszystkich zadaniach z listy, jeżeli done = false, dodaję do tabeli
         tasks.forEach(function(task){
-            if(task.done = false) {
+            if(task.done === false) {
                 addTaskToList(task);
             }
         });
@@ -320,9 +320,45 @@ document.addEventListener("DOMContentLoaded", function () {
         listOfTasks.innerHTML = "";
 
         tasks.forEach(function(task){
-            if(task.done = true) {
+            if(task.done === true) {
                 addTaskToList(task);
             }
+        });
+    });
+
+    //priorytet
+
+    //pokazywanie listy z priorytetami po najechaniu na button
+    var priorityButton = document.querySelector(".filters .priority");
+    var listOfPriority = document.querySelector(".filters .priority-list");
+    console.log(listOfPriority);
+    console.log(priorityButton);
+
+    //domyślne ukrycie listy z priorytetami
+    listOfPriority.hidden = true;
+
+    priorityButton.addEventListener("mouseover", function(){
+       listOfPriority.hidden = false;
+    });
+
+    priorityButton.addEventListener("mouseout", function() {
+        listOfPriority.hidden = true;
+    });
+
+    var filterPriority = document.querySelectorAll(".filters .priority li");
+    console.log(filterPriority);
+    filterPriority.forEach(function(value){
+
+        value.addEventListener("click", function(){
+            listOfTasks.innerHTML = "";
+
+            tasks.forEach(function(task) {
+                if(task.priority === value.dataset.priority) {
+                    addTaskToList(task);
+                }
+            });
+            //chowanie listy z priorytetami po wybraniu priorytetu
+            listOfPriority.hidden = true;
         });
     });
 
