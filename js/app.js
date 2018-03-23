@@ -295,4 +295,47 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     */
+
+    //filtrowanie zadań
+
+    //pokaż do zrobienia
+    var filterToDo = document.querySelector(".filters .to-do");
+
+    filterToDo.addEventListener("click", function(){
+        //czyszczenie tabeli
+        listOfTasks.innerHTML = "";
+
+        //przechodzę po wszystkich zadaniach z listy, jeżeli done = false, dodaję do tabeli
+        tasks.forEach(function(task){
+            if(task.done = false) {
+                addTaskToList(task);
+            }
+        });
+    });
+
+    //pokaż zrobione
+    var filterDone = document.querySelector(".filters .done");
+
+    filterDone.addEventListener("click", function(){
+        listOfTasks.innerHTML = "";
+
+        tasks.forEach(function(task){
+            if(task.done = true) {
+                addTaskToList(task);
+            }
+        });
+    });
+
+    //pokaż wszystkie
+    var filterShowAll = document.querySelector(".filters .show-all");
+
+    filterShowAll.addEventListener("click", function() {
+        //czyszczę tabelę - żeby gdy są już nałożone filtry, zadania wyświetlały się jeden raz
+        listOfTasks.innerHTML = "";
+
+        //dodaję wszystkie zadania do tabeli
+        tasks.forEach(function(task){
+            addTaskToList(task);
+        })
+    })
 });
