@@ -2,76 +2,110 @@
 @import "../modules/fonts.scss";
 
 .container {
-	.buttons {
-		display: flex;
-		justify-content: center;
-		button {
-			margin-right: 20px;
-			margin-left: 20px;
-			width: 100px;
-			height: 50px;
-			background-color: $button-color;
-			border: 1px solid $button-border;
-			color: $font-color;
-			border-radius: 10px;
-			font-size: 14px;
-		}
-	}
-	.form-container {
-		max-width: 100%;
-		max-height: 100%;
-		form {
-			padding-bottom: 50px;
-			max-width: 100%;
-			max-height: 100%;
-			#task-name {
-				width: 30%;
-				resize: none;
-			}
-			label {
-				padding-top: 10px;
-				padding-bottom: 5px;
-				display: flex;
-				justify-content: left;
-			}
-			#task-description {
-				max-width: 100%;
-				max-height: 100%;
-				width: 100%;
-				resize: vertical;
-			}
-		}
-	}
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+        button {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 4px;
+            font-weight: 400;
+            font-size: 14px;
+            width: 180px;
+            height: 60px;
+            background-color: transparent;
+            border: 3px solid black;
+            cursor: pointer;
+
+            &:hover {
+                animation: anim 750ms infinite;
+                background-color: rgba(144, 144, 144, 0.1);
+                font-weight: 700;
+                font-size: 14px;
+            }
+        }
+
+        .remove-done {
+            &:hover {
+                background-color: red;
+                color: white;
+            }
+        }
+    }
+}
+
+@keyframes anim {
+    0% {
+        box-shadow: 5px 4px $button-shadow-color-1, -5px -6px $button-shadow-color-2;
+    }
+    25% {
+        box-shadow: -5px -6px $button-shadow-color-1, 5px 4px $button-shadow-color-2;
+    }
+    50% {
+        box-shadow: 5px -4px $button-shadow-color-1, -8px 4px $button-shadow-color-2;
+    }
+    75% {
+        box-shadow: -8px -4px $button-shadow-color-1, -5px -4px $button-shadow-color-2;
+    }
+    100% {
+        box-shadow: -5px 0 $button-shadow-color-1, 5px -4px $button-shadow-color-2;
+    }
+}
+
+.form-container {
+    max-width: 100%;
+    max-height: 100%;
+    form {
+        padding-bottom: 50px;
+        max-width: 100%;
+        max-height: 100%;
+        #task-name {
+            width: 30%;
+            resize: none;
+        }
+        label {
+            padding-top: 10px;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: left;
+        }
+        #task-description {
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%;
+            resize: vertical;
+        }
+    }
+
 }
 
 form {
-	padding: 0 10px 50px 10px;
-	span {
-		display: block;
-		padding: 3px;
+    padding: 0 10px 50px 10px;
+    span {
+        display: block;
+        padding: 3px;
 
-		text-align: left;
-		color: #818181;
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 11px;
-	}
-	#span1 {
-		width: 120px;
-		margin: -6px 0 0 0;
-	}
-	#span2 {
-		width: 180px;
-		margin: -1px 0 0 0;
-	}
-	#span3 {
-		width: 203px;
-		margin: -1px 0 0 0;
-	}
-	#span4 {
-		width: 219px;
-		margin: -5px 0 -10px 0;
-		padding-bottom: 20px;
-	}
+        text-align: left;
+        color: #818181;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+    }
+    #span1 {
+        width: 120px;
+        margin: -6px 0 0 0;
+    }
+    #span2 {
+        width: 180px;
+        margin: -1px 0 0 0;
+    }
+    #span3 {
+        width: 203px;
+        margin: -1px 0 0 0;
+    }
+    #span4 {
+        width: 219px;
+        margin: -5px 0 -10px 0;
+        padding-bottom: 20px;
+    }
 }
 
 /*
