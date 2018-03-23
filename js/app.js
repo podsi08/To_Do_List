@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.checked = task.done;
 
         //przy dodawaniu nowego zadania dodajemy też event, żeby móc oznaczać nowe zadania jako zrobione
-        checkbox.addEventListener("click", function () {
+        checkbox.addEventListener("click", function() {
             task.done = checkbox.checked;
             //dodajemy klasę do rzędu w tabeli - do późniejszego ostylowania w css
             checkbox.parentElement.parentElement.classList.add('task-done');
@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteTask.value = "Usuń";
 
         //przy dodawaniu zadania (z local storage do tabeli i nowego zadania), dodajemy event na przycisku "usuń"
-        deleteTask.addEventListener('click', function () {
+        deleteTask.addEventListener('click', function() {
             //tworzymy nową tablicę tasks bez usuniętego zadania
-            tasks = tasks.filter(function (value) {
+            tasks = tasks.filter(function(value) {
                 return value.id !== task.id;
             });
             //usuwamy element z tabeli
@@ -300,13 +300,13 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż do zrobienia
     var filterToDo = document.querySelector(".filters .to-do");
 
-    filterToDo.addEventListener("click", function () {
+    filterToDo.addEventListener("click", function() {
         //czyszczenie tabeli
         listOfTasks.innerHTML = "";
 
         //przechodzę po wszystkich zadaniach z listy, jeżeli done = false, dodaję do tabeli
-        tasks.forEach(function (task) {
-            if (task.done = false) {
+        tasks.forEach(function(task) {
+            if(task.done === false) {
                 addTaskToList(task);
             }
         });
@@ -315,25 +315,61 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż zrobione
     var filterDone = document.querySelector(".filters .done");
 
-    filterDone.addEventListener("click", function () {
+    filterDone.addEventListener("click", function() {
         listOfTasks.innerHTML = "";
 
-        tasks.forEach(function (task) {
-            if (task.done = true) {
+        tasks.forEach(function(task) {
+            if(task.done === true) {
                 addTaskToList(task);
             }
+        });
+    });
+
+    //priorytet
+
+    //pokazywanie listy z priorytetami po najechaniu na button
+    var priorityButton = document.querySelector(".filters .priority");
+    var listOfPriority = document.querySelector(".filters .priority-list");
+    console.log(listOfPriority);
+    console.log(priorityButton);
+
+    //domyślne ukrycie listy z priorytetami
+    listOfPriority.hidden = true;
+
+    priorityButton.addEventListener("mouseover", function(){
+       listOfPriority.hidden = false;
+    });
+
+    priorityButton.addEventListener("mouseout", function() {
+        listOfPriority.hidden = true;
+    });
+
+    var filterPriority = document.querySelectorAll(".filters .priority li");
+    console.log(filterPriority);
+    filterPriority.forEach(function(value){
+
+        value.addEventListener("click", function(){
+            listOfTasks.innerHTML = "";
+
+            tasks.forEach(function(task) {
+                if(task.priority === value.dataset.priority) {
+                    addTaskToList(task);
+                }
+            });
+            //chowanie listy z priorytetami po wybraniu priorytetu
+            listOfPriority.hidden = true;
         });
     });
 
     //pokaż wszystkie
     var filterShowAll = document.querySelector(".filters .show-all");
 
-    filterShowAll.addEventListener("click", function () {
+    filterShowAll.addEventListener("click", function() {
         //czyszczę tabelę - żeby gdy są już nałożone filtry, zadania wyświetlały się jeden raz
         listOfTasks.innerHTML = "";
 
         //dodaję wszystkie zadania do tabeli
-        tasks.forEach(function (task) {
+        tasks.forEach(function(task) {
             addTaskToList(task);
         })
     })
