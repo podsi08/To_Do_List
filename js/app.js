@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function addTaskToList(task) {
         var tr = document.createElement("tr");
+        if (task.done){
+            tr.classList.add("task-done");
+        }
         var taskTitle = document.createElement("td");
         var taskDate = document.createElement("td");
         var taskPriority = document.createElement("td");
@@ -23,11 +26,29 @@ document.addEventListener("DOMContentLoaded", function () {
         var checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.name = "undone";
+        checkbox.checked = task.done;
+        checkbox.addEventListener("click", function(){
+           task.done = checkbox.checked;
+           checkbox.parentElement.parentElement.classList.add('task-done');
+           saveToLocalStorage(tasks);
+        });
+
         var deleteTd = document.createElement("td");
         var deleteTask = document.createElement('input');
         deleteTask.type = "submit";
         deleteTask.name = "delete";
         deleteTask.value = "Usuń";
+
+        deleteTask.addEventListener('click', function() {
+            tasks = tasks.filter(function(value) {
+                return value.id !== task.id;
+            });
+            listOfTasks.removeChild(deleteTask.parentElement.parentElement);
+            if (tasks.length === 0) {
+                table.hidden = true;
+            }
+            saveToLocalStorage(tasks);
+        });
 
         taskDate.className = "text-centered";
         taskPriority.className = "text-centered";
@@ -59,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // funkcja zapisu do local storage
-    function addToLocalStorage(data) {
+    function saveToLocalStorage(data) {
         localStorage.setItem(taskListLocalStorageKey, JSON.stringify(data));
     }
 
@@ -80,10 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var storage = JSON.parse(localStorage.getItem(taskListLocalStorageKey));
     var table = document.querySelector(".list");
 
-
+    var tasks;
     //jeżeli brak danych w local storage tworzymy nową pustą tablicę, counter ustawiamy na 0, ukrywamy tabelę
-    if (storage === null) {
-        var tasks = [];
+    if (storage === null || storage.length === 0) {
+        tasks = [];
         var idCounter = 0;
         table.hidden = true;
     } else {
@@ -209,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
             date.value = '';
             select.value = '0';
             description.value = '';
-            addToLocalStorage(tasks);
+            saveToLocalStorage(tasks);
             addTaskToList(newTask);
             table.hidden = false;
             toggleFormSection();
@@ -236,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var clearButton = document.querySelector(".remove-all");
 
     clearButton.addEventListener("click", function () {
-        localStorage.setItem(taskListLocalStorageKey, null);
+        localStorage.removeItem(taskListLocalStorageKey);
         tasks = [];
         listOfTasks.innerHTML = "";
         table.hidden = true;
@@ -259,19 +280,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 element.parentElement.parentElement.style.color = 'black';
                 tasks[key].done = false;
             }
+            saveToLocalStorage(tasks);
         });
     });
 
-    //usuwanie wybranego zadania z tabeli i local storage
-
-    var deleteTask = document.querySelectorAll('input[name=delete]');
-
-    deleteTask.forEach(function (button, key) {
-        button.addEventListener("click", function() {
-            if (tasks[key].done === true) {
-                listOfTasks.removeChild(this.parentElement.parentElement);
-                //localStorage.removeItem(taskListLocalStorageKey); //Aktualnie usuwa całą zawartość local storage
-            }
-        });
-    });
 });
