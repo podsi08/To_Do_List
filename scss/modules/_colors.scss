@@ -1,4 +1,9 @@
-$background-color: rgb(185, 216, 255);
+$background-color: rgba(210, 213, 213, 0.66);
 $font-color: #575456;
 $button-color: rgb(82, 131, 255);
 $button-border: #000055;
+$table-head-color: #bdbdbd;
+$table-row1-color: #79e0ee;
+$table-row2-color: lighten($table-row1-color, 20%);
+$accent-color: #641487;
+$done-color: #d8d8d8;

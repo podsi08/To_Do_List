@@ -19,10 +19,15 @@ document.addEventListener("DOMContentLoaded", function () {
             tr.classList.add("task-done");
         }
         var taskTitle = document.createElement("td");
+        taskTitle.classList.add("col1");
         var taskDate = document.createElement("td");
+        taskDate.classList.add("col2");
         var taskPriority = document.createElement("td");
+        taskPriority.classList.add("col3");
         var taskDescription = document.createElement("td");
+        taskDescription.classList.add("col4");
         var checkboxTd = document.createElement("td");
+        checkboxTd.classList.add("col5");
         var checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.name = "undone";
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         var deleteTd = document.createElement("td");
         var deleteTask = document.createElement('input');
+        deleteTd.classList.add("col6");
         deleteTask.type = "submit";
         deleteTask.name = "delete";
         deleteTask.value = "Usuń";
@@ -61,8 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
             saveToLocalStorage(tasks);
         });
 
-        taskDate.className = "text-centered";
-        taskPriority.className = "text-centered";
 
         checkboxTd.appendChild(checkbox);
         deleteTd.appendChild(deleteTask);

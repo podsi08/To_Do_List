@@ -24,33 +24,23 @@
 			padding-bottom: 50px;
 			max-width: 100%;
 			max-height: 100%;
-			//fieldset {
-				//max-width: 100%;
-				//max-height: 100%;
-				#task-name {
+			#task-name {
 				width: 30%;
 				resize: none;
-				}
-				label {
+			}
+			label {
 				padding-top: 10px;
 				padding-bottom: 5px;
 				display: flex;
 				justify-content: left;
-				}
-				#task-description {
+			}
+			#task-description {
 				max-width: 100%;
 				max-height: 100%;
 				width: 100%;
 				resize: vertical;
-				}
-			//}
+			}
 		}
-	}
-	.text-centered {
-		text-align: center;
-	}
-	.enough-width {
-		width: 20%;
 	}
 }
 /*

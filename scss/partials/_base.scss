@@ -8,10 +8,11 @@
 }
 
 body {
-	background-color: $background-color;
 	font-family: $font_main;
 	.container {
 		width: 100vw;
+		height: 100vw;
+		background: url("../images/gray_jean.png");
 		header h1 {
 			text-align: center;
 			color: $font-color;
@@ -19,13 +20,13 @@ body {
 		}
 	}
 	section {
-		min-height: 200px;
+		min-height: 20px;
 	}
 }
 
 @media only screen and (min-width: 450px){
 	.container {
 		max-width: 800px;
-		margin: auto;
+		margin: 0 auto;
 	}
 }

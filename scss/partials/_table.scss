@@ -1,0 +1,81 @@
+@import "../modules/colors.scss";
+@import "../modules/fonts.scss";
+
+table {
+	margin-top: 15px;
+	max-width: 100%;
+
+	thead, tbody {
+		.col1 {
+			width: 25%;
+		}
+		.col2 {
+			width: 20%;
+			text-align: center;
+		}
+		.col3 {
+			width: 8%;
+			color: $accent-color;
+			font-weight: bold;
+			text-align: center;
+		}
+		.col4 {
+			width: 30%;
+		}
+		.col5 {
+			width: 7%;
+			text-align: center;
+			input {
+				width: 20px;
+				height: 20px;
+				color: $accent-color;
+				background-color: $table-head-color;
+			}
+		}
+		.col6 {
+			width: 10%;
+			text-align: center;
+			input {
+				color: $accent-color;
+				font-family: $font_main;
+				font-weight: bold;
+				padding: 5px;
+				font-size: 12px;
+				background-color: $table-head-color;
+				border-radius: 5px;
+			}
+		}
+	}
+	thead {
+		width: 100%;
+		th {
+			font-size: 18px;
+			font-weight: 500;
+			background-color: $table-head-color;
+			border-spacing: 0;
+			border-collapse: collapse;
+			text-align: left;
+		}
+
+	}
+	td, th {
+		padding: 5px;
+		th {
+		}
+	}
+
+	tbody {
+		tr{
+			&:nth-child(2n) {
+				background-color: $table-row1-color;
+			}
+			&:nth-child(2n +1) {
+				background-color: $table-row2-color;
+			}
+			&.task-done {
+				opacity: 0.6;
+			}
+		}
+
+	}
+}
