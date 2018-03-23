@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function addTaskToList(task) {
         var tr = document.createElement("tr");
-        if (task.done){
+        if (task.done) {
             tr.classList.add("task-done");
         }
         var taskTitle = document.createElement("td");
@@ -31,12 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.checked = task.done;
 
         //przy dodawaniu nowego zadania dodajemy też event, żeby móc oznaczać nowe zadania jako zrobione
-        checkbox.addEventListener("click", function(){
-           task.done = checkbox.checked;
-           //dodajemy klasę do rzędu w tabeli - do późniejszego ostylowania w css
-           checkbox.parentElement.parentElement.classList.add('task-done');
-           //nadpisujemy local storage
-           saveToLocalStorage(tasks);
+        checkbox.addEventListener("click", function () {
+            task.done = checkbox.checked;
+            //dodajemy klasę do rzędu w tabeli - do późniejszego ostylowania w css
+            checkbox.parentElement.parentElement.classList.add('task-done');
+            //nadpisujemy local storage
+            saveToLocalStorage(tasks);
         });
 
         var deleteTd = document.createElement("td");
@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteTask.value = "Usuń";
 
         //przy dodawaniu zadania (z local storage do tabeli i nowego zadania), dodajemy event na przycisku "usuń"
-        deleteTask.addEventListener('click', function() {
+        deleteTask.addEventListener('click', function () {
             //tworzymy nową tablicę tasks bez usuniętego zadania
-            tasks = tasks.filter(function(value) {
+            tasks = tasks.filter(function (value) {
                 return value.id !== task.id;
             });
             //usuwamy element z tabeli
@@ -156,8 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
         currentDate = `${year}-${month}-0${day}`;
     }
 
-    console.log(currentDate.substr(8, 2));
-
     //wyświetlanie tabeli z zadaniami z local storage
 
     for (var taskIndex in tasks) {
@@ -195,17 +193,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // data
-
         if (date.value === '') {
             addErrorMsg(termError, 'Musisz podać datę.');
             error = true;
-        } else if (currentDate.substr(0, 4) > date.value.substr(0, 4) || currentDate.substr(5, 2) > date.value.substr(5, 2) || currentDate.substr(8, 2) > date.value.substr(8, 2)) {
+        } else if (currentDate.substr(0, 4) > date.value.substr(0, 4) || currentDate.substr(5, 2) > date.value.substr(5, 2)) {
+            addErrorMsg(termError, 'nie możesz podać wstecznej daty.');
+            error = true;
+        } else if (currentDate.substr(5, 2) == date.value.substr(5, 2) && currentDate.substr(8, 2) > date.value.substr(8, 2)) {
             addErrorMsg(termError, 'nie możesz podać wstecznej daty.');
             error = true;
         } else {
             newTask.date = date.value;
         }
-        console.log(date.value);
 
         // priorytet
 
@@ -301,13 +300,13 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż do zrobienia
     var filterToDo = document.querySelector(".filters .to-do");
 
-    filterToDo.addEventListener("click", function(){
+    filterToDo.addEventListener("click", function () {
         //czyszczenie tabeli
         listOfTasks.innerHTML = "";
 
         //przechodzę po wszystkich zadaniach z listy, jeżeli done = false, dodaję do tabeli
-        tasks.forEach(function(task){
-            if(task.done = false) {
+        tasks.forEach(function (task) {
+            if (task.done = false) {
                 addTaskToList(task);
             }
         });
@@ -316,11 +315,11 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż zrobione
     var filterDone = document.querySelector(".filters .done");
 
-    filterDone.addEventListener("click", function(){
+    filterDone.addEventListener("click", function () {
         listOfTasks.innerHTML = "";
 
-        tasks.forEach(function(task){
-            if(task.done = true) {
+        tasks.forEach(function (task) {
+            if (task.done = true) {
                 addTaskToList(task);
             }
         });
@@ -329,12 +328,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż wszystkie
     var filterShowAll = document.querySelector(".filters .show-all");
 
-    filterShowAll.addEventListener("click", function() {
+    filterShowAll.addEventListener("click", function () {
         //czyszczę tabelę - żeby gdy są już nałożone filtry, zadania wyświetlały się jeden raz
         listOfTasks.innerHTML = "";
 
         //dodaję wszystkie zadania do tabeli
-        tasks.forEach(function(task){
+        tasks.forEach(function (task) {
             addTaskToList(task);
         })
     })
