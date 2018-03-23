@@ -9,14 +9,15 @@
 
 body {
 	font-family: $font_main;
+    background: url("../../images/gplaypattern.png");
 	.container {
-		width: 100vw;
+		max-width: 1200px;
 		height: 100vw;
-		background: url("../images/gray_jean.png");
+		background-color: rgba(255, 255, 255, 0.5);
 		header h1 {
 			text-align: center;
 			color: $font-color;
-			margin: 10px;
+			margin: 10px 10px 20px;
 		}
 	}
 	section {

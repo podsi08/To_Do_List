@@ -2,53 +2,60 @@
 @import "../modules/fonts.scss";
 
 .container {
-	.filters {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		.filter {
-			width: 80vw;
-			margin-bottom: 10px;
-			background-color: $button-color;
-			border: 1px solid $button-border;
-			color: $font-color;
-			border-radius: 10px;
-			font-size: 14px;
-			text-align: center;
-			line-height: 30px;
-			&.priority {
-				ul {
-					list-style: none;
-					background-color: $button-color;
-					position: absolute;
-					width: 80vw;
-					li {
-						text-align: left;
-						padding-left: 10px;
-						cursor: pointer;
-					}
-				}
-			}
-		}
-	}
+    .filters {
+        display: flex;
+        flex-direction: column;
+        .filter {
+            line-height: 55px;
+            text-align: center;
+            margin-bottom: 10px;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 4px;
+            font-weight: 400;
+            font-size: 14px;
+            background-color: transparent;
+            border: 3px solid black;
+            cursor: pointer;
+            &:hover {
+                animation: anim 750ms infinite;
+                background-color: rgba(144, 144, 144, 0.1);
+                font-weight: 700;
+                font-size: 14px;
+            }
+            &.priority {
+                ul {
+                    list-style: none;
+                    background-color: $button-color;
+                    position: absolute;
+                    width: 80vw;
+                    li {
+                        text-align: left;
+                        padding-left: 10px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
 }
 
 
-@media only screen and (min-width: 450px){
-	.container {
-		.filters {
-			flex-direction: row;
-			justify-content: space-around;
-			.filter {
-				width: 150px;
-				margin-right: 20px;
-				margin-left: 20px;
-				&.priority {
-					ul {
-						width: 150px;
-					}
-				}
-			}
-		}
-	}
+@media only screen and (min-width: 450px) {
+    .container {
+        .filters {
+            flex-direction: row;
+            justify-content: space-around;
+            .filter {
+                width: 150px;
+                margin-right: 20px;
+                margin-left: 20px;
+                &.priority {
+                    ul {
+                        width: 150px;
+                    }
+                }
+            }
+        }
+    }
 }
