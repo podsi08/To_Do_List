@@ -26,10 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
         var checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.name = "undone";
+
+        //jeżeli dodajemy do tabeli zadania z local storage, gdy zadanie zrobione checkbox zostanie zaznaczony
         checkbox.checked = task.done;
+
+        //przy dodawaniu nowego zadania dodajemy też event, żeby móc oznaczać nowe zadania jako zrobione
         checkbox.addEventListener("click", function(){
            task.done = checkbox.checked;
+           //dodajemy klasę do rzędu w tabeli - do późniejszego ostylowania w css
            checkbox.parentElement.parentElement.classList.add('task-done');
+           //nadpisujemy local storage
            saveToLocalStorage(tasks);
         });
 
@@ -39,14 +45,19 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteTask.name = "delete";
         deleteTask.value = "Usuń";
 
+        //przy dodawaniu zadania (z local storage do tabeli i nowego zadania), dodajemy event na przycisku "usuń"
         deleteTask.addEventListener('click', function() {
+            //tworzymy nową tablicę tasks bez usuniętego zadania
             tasks = tasks.filter(function(value) {
                 return value.id !== task.id;
             });
+            //usuwamy element z tabeli
             listOfTasks.removeChild(deleteTask.parentElement.parentElement);
+            //chowamy tabelę gdy brak w niej zadań
             if (tasks.length === 0) {
                 table.hidden = true;
             }
+            //nadpisujemy local storage
             saveToLocalStorage(tasks);
         });
 
@@ -264,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // checkbox w zadaniu
-
+    /*
     var checkboxes = document.querySelectorAll('input[type=checkbox]');
 
     checkboxes.forEach(function (element, key) {
@@ -283,5 +294,5 @@ document.addEventListener("DOMContentLoaded", function () {
             saveToLocalStorage(tasks);
         });
     });
-
+    */
 });
