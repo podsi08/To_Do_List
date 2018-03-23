@@ -11,7 +11,7 @@ body {
 	font-family: $font_main;
 	.container {
 		width: 100vw;
-		height: 100vw;
+		height: auto;
 		background: url("../images/gray_jean.png");
 		header h1 {
 			text-align: center;

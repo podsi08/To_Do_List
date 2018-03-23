@@ -57,9 +57,11 @@
                 <!-- max-width opisu nie działa kiedy fieldset działa ;/ -->
                 <label>Temat zadania:</label>
                 <textarea id="task-name" rows="1"></textarea>
+                <span id="span1">Wymyśl coś ciekawego</span>
                 <div class="error-message error-0"></div>
                 <label>Termin:</label>
                 <input type="date" id='task-date' name="task-date" placeholder="">
+                <span id="span2">Do kiedy chcesz wykonać zadanie?</span>
                 <div class="error-message error-1"></div>
                 <label id='task-priority'>Priorytet:</label>
                 <select id='select'>
@@ -70,9 +72,11 @@
                         <option value="4">4</option>    <!-- że 1 to najważniejsze -->
                         <option value="5">5 (najmniej ważny)</option>   <!-- 5 to najmniej ważne -->
                     </select>
+                    <span id="span3">Może poczekać.. albo jednak nie bardzo</span>
                     <div class="error-message error-2"></div>
                 <label>Opis:</label>
-                <textarea id="task-description" rows="10"></textarea>
+                <textarea id="task-description" rows="7"></textarea>
+                <span id="span4">Może chcesz już nakreślić sobie jakiś plan?</span>
                 <div class="error-message error-3"></div>
                 <input id="new-task" type="submit" name="addnewform" value="Potwierdź dodanie zadania">
                 <input id="reset-task" type="submit" name="clearform" value="Wyczyść formularz">
