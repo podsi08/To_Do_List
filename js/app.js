@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.checked = task.done;
 
         //przy dodawaniu nowego zadania dodajemy też event, żeby móc oznaczać nowe zadania jako zrobione
-        checkbox.addEventListener("click", function() {
+        checkbox.addEventListener("click", function () {
             task.done = checkbox.checked;
             //dodajemy klasę do rzędu w tabeli - do późniejszego ostylowania w css
             checkbox.parentElement.parentElement.classList.toggle('task-done');
@@ -52,9 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteTask.value = "Usuń";
 
         //przy dodawaniu zadania (z local storage do tabeli i nowego zadania), dodajemy event na przycisku "usuń"
-        deleteTask.addEventListener('click', function() {
+        deleteTask.addEventListener('click', function () {
             //tworzymy nową tablicę tasks bez usuniętego zadania
-            tasks = tasks.filter(function(value) {
+            tasks = tasks.filter(function (value) {
                 return value.id !== task.id;
             });
             //usuwamy element z tabeli
@@ -200,11 +200,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (date.value === '') {
             addErrorMsg(termError, 'Musisz podać datę.');
             error = true;
-        } else if (currentDate.substr(0, 4) > date.value.substr(0, 4) || currentDate.substr(5, 2) > date.value.substr(5, 2)) {
-            addErrorMsg(termError, 'nie możesz podać wstecznej daty.');
+        } else if (currentDate.substr(0, 4) > date.value.substr(0, 4)) {
+            addErrorMsg(termError, 'Nie możesz podać wstecznej daty.');
             error = true;
-        } else if (currentDate.substr(5, 2) == date.value.substr(5, 2) && currentDate.substr(8, 2) > date.value.substr(8, 2)) {
-            addErrorMsg(termError, 'nie możesz podać wstecznej daty.');
+        } else if (currentDate.substr(0, 4) == date.value.substr(0, 4) && currentDate.substr(5, 2) > date.value.substr(5, 2)) {
+            addErrorMsg(termError, 'Nie możesz podać wstecznej daty.');
+            error = true;
+        } else if (currentDate.substr(0, 4) == date.value.substr(0, 4) && currentDate.substr(5, 2) == date.value.substr(5, 2) && currentDate.substr(8, 2) > date.value.substr(8, 2)) {
+            addErrorMsg(termError, 'Nie możesz podać wstecznej daty.');
             error = true;
         } else {
             newTask.date = date.value;
@@ -304,13 +307,13 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż do zrobienia
     var filterToDo = document.querySelector(".filters .to-do");
 
-    filterToDo.addEventListener("click", function() {
+    filterToDo.addEventListener("click", function () {
         //czyszczenie tabeli
         listOfTasks.innerHTML = "";
 
         //przechodzę po wszystkich zadaniach z listy, jeżeli done = false, dodaję do tabeli
-        tasks.forEach(function(task) {
-            if(task.done === false) {
+        tasks.forEach(function (task) {
+            if (task.done === false) {
                 addTaskToList(task);
             }
         });
@@ -319,11 +322,11 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż zrobione
     var filterDone = document.querySelector(".filters .done");
 
-    filterDone.addEventListener("click", function() {
+    filterDone.addEventListener("click", function () {
         listOfTasks.innerHTML = "";
 
-        tasks.forEach(function(task) {
-            if(task.done === true) {
+        tasks.forEach(function (task) {
+            if (task.done === true) {
                 addTaskToList(task);
             }
         });
@@ -334,29 +337,26 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokazywanie listy z priorytetami po najechaniu na button
     var priorityButton = document.querySelector(".filters .priority");
     var listOfPriority = document.querySelector(".filters .priority-list");
-    console.log(listOfPriority);
-    console.log(priorityButton);
 
     //domyślne ukrycie listy z priorytetami
     listOfPriority.hidden = true;
 
-    priorityButton.addEventListener("mouseover", function(){
-       listOfPriority.hidden = false;
+    priorityButton.addEventListener("mouseover", function () {
+        listOfPriority.hidden = false;
     });
 
-    priorityButton.addEventListener("mouseout", function() {
+    priorityButton.addEventListener("mouseout", function () {
         listOfPriority.hidden = true;
     });
 
     var filterPriority = document.querySelectorAll(".filters .priority li");
-    console.log(filterPriority);
-    filterPriority.forEach(function(value){
+    filterPriority.forEach(function (value) {
 
-        value.addEventListener("click", function(){
+        value.addEventListener("click", function () {
             listOfTasks.innerHTML = "";
 
-            tasks.forEach(function(task) {
-                if(task.priority === value.dataset.priority) {
+            tasks.forEach(function (task) {
+                if (task.priority === value.dataset.priority) {
                     addTaskToList(task);
                 }
             });
@@ -368,12 +368,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //pokaż wszystkie
     var filterShowAll = document.querySelector(".filters .show-all");
 
-    filterShowAll.addEventListener("click", function() {
+    filterShowAll.addEventListener("click", function () {
         //czyszczę tabelę - żeby gdy są już nałożone filtry, zadania wyświetlały się jeden raz
         listOfTasks.innerHTML = "";
 
         //dodaję wszystkie zadania do tabeli
-        tasks.forEach(function(task) {
+        tasks.forEach(function (task) {
             addTaskToList(task);
         })
     })
@@ -381,16 +381,16 @@ document.addEventListener("DOMContentLoaded", function () {
     //usuń wykonane zadania
     var removeDone = document.querySelector(".remove-done");
 
-    removeDone.addEventListener("click", function() {
+    removeDone.addEventListener("click", function () {
         //tworzymy nową tablicę tasks bez wykonanych zadań
-        tasks = tasks.filter(function(value) {
+        tasks = tasks.filter(function (value) {
             return value.done === false;
         });
 
         listOfTasks.innerHTML = "";
 
         //dodaję wszystkie niewykonane zadania do tabeli
-        tasks.forEach(function(task) {
+        tasks.forEach(function (task) {
             addTaskToList(task);
         })
 
