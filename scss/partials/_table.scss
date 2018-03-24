@@ -30,6 +30,7 @@ table {
 				height: 20px;
 				color: $accent-color;
 				background-color: $table-head-color;
+				border: 2px solid black;
 			}
 		}
 		.col6 {
@@ -42,7 +43,7 @@ table {
 				padding: 5px;
 				font-size: 12px;
 				background-color: $table-head-color;
-				border-radius: 5px;
+				border: 2px solid black;
 			}
 		}
 	}
