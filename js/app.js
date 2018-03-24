@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.addEventListener("click", function() {
             task.done = checkbox.checked;
             //dodajemy klasę do rzędu w tabeli - do późniejszego ostylowania w css
-            checkbox.parentElement.parentElement.classList.add('task-done');
+            checkbox.parentElement.parentElement.classList.toggle('task-done');
             //nadpisujemy local storage
             saveToLocalStorage(tasks);
         });
@@ -376,5 +376,29 @@ document.addEventListener("DOMContentLoaded", function () {
         tasks.forEach(function(task) {
             addTaskToList(task);
         })
+    })
+
+    //usuń wykonane zadania
+    var removeDone = document.querySelector(".remove-done");
+
+    removeDone.addEventListener("click", function() {
+        //tworzymy nową tablicę tasks bez wykonanych zadań
+        tasks = tasks.filter(function(value) {
+            return value.done === false;
+        });
+
+        listOfTasks.innerHTML = "";
+
+        //dodaję wszystkie niewykonane zadania do tabeli
+        tasks.forEach(function(task) {
+            addTaskToList(task);
+        })
+
+        //chowamy tabelę gdy brak w niej zadań do zrobienia
+        if (tasks.length === 0) {
+            table.hidden = true;
+        }
+        //nadpisujemy local storage
+        saveToLocalStorage(tasks);
     })
 });
