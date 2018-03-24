@@ -280,28 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
         table.hidden = true;
     });
 
-    // checkbox w zadaniu
-    /*
-    var checkboxes = document.querySelectorAll('input[type=checkbox]');
-
-    checkboxes.forEach(function (element, key) {
-        element.addEventListener('click', function (e) {
-            if (element.checked) {
-                element.parentElement.parentElement.style.backgroundColor = 'lightgrey';
-                element.parentElement.style.backgroundColor = 'lightgreen';
-                element.parentElement.parentElement.style.color = 'gray';
-                tasks[key].done = true;
-            } else {
-                element.parentElement.parentElement.style.backgroundColor = 'transparent';
-                element.parentElement.style.backgroundColor = 'transparent';
-                element.parentElement.parentElement.style.color = 'black';
-                tasks[key].done = false;
-            }
-            saveToLocalStorage(tasks);
-        });
-    });
-    */
-
+   
     //filtrowanie zadań
 
     //pokaż do zrobienia
@@ -376,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tasks.forEach(function (task) {
             addTaskToList(task);
         })
-    })
+    });
 
     //usuń wykonane zadania
     var removeDone = document.querySelector(".remove-done");
@@ -392,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //dodaję wszystkie niewykonane zadania do tabeli
         tasks.forEach(function (task) {
             addTaskToList(task);
-        })
+        });
 
         //chowamy tabelę gdy brak w niej zadań do zrobienia
         if (tasks.length === 0) {
