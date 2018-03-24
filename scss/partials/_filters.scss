@@ -20,7 +20,7 @@
             background-color: transparent;
             border: 3px solid black;
             cursor: pointer;
-            width: 40%;
+            width: 170px;
             &:hover {
                 animation: anim 750ms infinite;
                 background-color: rgba(144, 144, 144, 0.1);
@@ -32,7 +32,7 @@
                     list-style: none;
                     //background-color: $button-color;
                     position: absolute;
-                    width: 40%;
+                    width: 170px;
                     background-color: rgba(144, 144, 144, 0.95);
                     li {
                         text-align: center;
@@ -56,15 +56,10 @@
             justify-content: space-around;
             flex-wrap: nowrap;
             .filter {
-                width: 20%;
                 margin-right: 20px;
                 margin-left: 20px;
-                &.priority {
-                    ul {
-                        width: 20%;
-                    }
-                }
             }
         }
     }
 }
+
