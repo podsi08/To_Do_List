@@ -15,8 +15,6 @@ table {
 		}
 		.col3 {
 			width: 8%;
-			color: $accent-color;
-			font-weight: bold;
 			text-align: center;
 		}
 		.col4 {
@@ -56,13 +54,18 @@ table {
 			border-spacing: 0;
 			border-collapse: collapse;
 			text-align: left;
+			color: black;
 		}
-
 	}
+	tbody {
+		td.col3 {
+			color: $accent-color;
+			font-weight: bold;
+		}
+	}
+
 	td, th {
 		padding: 5px;
-		th {
-		}
 	}
 
 	tbody {
@@ -80,3 +83,4 @@ table {
 
 	}
 }
+

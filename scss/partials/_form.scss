@@ -1,0 +1,72 @@
+@import "../modules/colors.scss";
+@import "../modules/fonts.scss";
+
+.form-container {
+	max-width: 100%;
+	max-height: 100%;
+	form {
+		padding-bottom: 50px;
+		max-width: 100%;
+		max-height: 100%;
+		#task-name {
+			width: 30%;
+			resize: none;
+		}
+		label {
+			padding-top: 10px;
+			padding-bottom: 5px;
+			display: flex;
+			justify-content: left;
+		}
+		#task-description {
+			max-width: 100%;
+			max-height: 100%;
+			width: 100%;
+			resize: vertical;
+		}
+		input[type="submit"] {
+			color: $accent-color;
+			font-family: $font_main;
+			font-weight: bold;
+			padding: 5px;
+			font-size: 14px;
+			background-color: $table-head-color;
+			border: 2px solid black;
+		}
+		.error-message {
+			color: indianred;
+		}
+	}
+
+}
+
+
+form {
+	padding: 0 10px 50px 10px;
+	span {
+		display: block;
+		padding: 3px;
+
+		text-align: left;
+		color: #818181;
+		font-family: $font_main;
+		font-size: 11px;
+	}
+	#span1 {
+		width: 120px;
+		margin: -6px 0 0 0;
+	}
+	#span2 {
+		width: 180px;
+		margin: -1px 0 0 0;
+	}
+	#span3 {
+		width: 203px;
+		margin: -1px 0 0 0;
+	}
+	#span4 {
+		width: 219px;
+		margin: -5px 0 -10px 0;
+		padding-bottom: 20px;
+	}
+}
