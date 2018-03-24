@@ -74,9 +74,22 @@
             width: 100%;
             resize: vertical;
         }
+	    input[type="submit"] {
+		    color: $accent-color;
+		    font-family: $font_main;
+		    font-weight: bold;
+		    padding: 5px;
+		    font-size: 14px;
+		    background-color: $table-head-color;
+		    border-radius: 5px;
+	    }
+	    .error-message {
+		    color: indianred;
+	    }
     }
 
 }
+
 
 form {
     padding: 0 10px 50px 10px;
@@ -86,7 +99,7 @@ form {
 
         text-align: left;
         color: #818181;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: $font_main;
         font-size: 11px;
     }
     #span1 {
