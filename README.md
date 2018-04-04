@@ -1,6 +1,8 @@
 # To Do List
 In this group project we made a To Do List. We used JavaScript and to style - SASS.
 
+https://podsi08.github.io/To_Do_List/
+
 ## Functionality
 - add tasks,
 - priorityzing tasks,
@@ -9,6 +11,6 @@ In this group project we made a To Do List. We used JavaScript and to style - SA
 - removing done/all tasks
 
 ## Contributors
-- [@podsi08](https://github.com/podsi08),
-- [@juraszekjakub](https://github.com/juraszekjakub),
-- [@DawidSobieraj](https://github.com/DawidSobieraj)
+- Jakub Juraszek [@juraszekjakub](https://github.com/juraszekjakub),
+- Dawid Sobieraj [@DawidSobieraj](https://github.com/DawidSobieraj),
+- Aleksandra Tobiszewska [@podsi08](https://github.com/podsi08)
